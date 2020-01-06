@@ -59,7 +59,7 @@
         <li class="layui-nav-item">
           <a href="javascript:;">订单管理</a>
           <dl class="layui-nav-child">
-            <dd><a href="javascript:;">订单查询</a></dd>
+            <dd><a href="/order/index">订单查询</a></dd>
             <dd><a href="javascript:;">列表二</a></dd>
             <dd><a href="">超链接</a></dd>
           </dl>
