@@ -17,8 +17,8 @@
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
       <li class="layui-nav-item"><a href="">控制台</a></li>
-      <li class="layui-nav-item"><a href="">商品管理</a></li>
-      <li class="layui-nav-item"><a href="">用户</a></li>
+      <li class="layui-nav-item"><a href="/goods/index">商品管理</a></li>
+      <li class="layui-nav-item"><a href="/order/index">订单管理</a></li>
       <li class="layui-nav-item">
         <a href="javascript:;">其它系统</a>
         <dl class="layui-nav-child">
@@ -57,23 +57,17 @@
           </dl>
         </li>
         <li class="layui-nav-item">
-          <a href="javascript:;">订单管理</a>
+          <a href="/order/index">订单管理</a>
           <dl class="layui-nav-child">
             <dd><a href="/order/index">订单查询</a></dd>
-            <dd><a href="javascript:;">列表二</a></dd>
-            <dd><a href="">超链接</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item">
           <a href="javascript:;">库存管理</a>
           <dl class="layui-nav-child">
-            <dd><a href="javascript:;">库存查询</a></dd>
-            <dd><a href="javascript:;">列表二</a></dd>
-            <dd><a href="">超链接</a></dd>
+            <dd><a href="/stock/index">库存查询</a></dd>
           </dl>
         </li>
-        <li class="layui-nav-item"><a href="">云市场</a></li>
-        <li class="layui-nav-item"><a href="">发布商品</a></li>
       </ul>
     </div>
   </div>
