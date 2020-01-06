@@ -17,8 +17,8 @@
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
       <li class="layui-nav-item"><a href="">控制台</a></li>
-      <li class="layui-nav-item"><a href="">商品管理</a></li>
-      <li class="layui-nav-item"><a href="">用户</a></li>
+      <li class="layui-nav-item"><a href="/goods/index">商品管理</a></li>
+      <li class="layui-nav-item"><a href="/order/index">订单管理</a></li>
       <li class="layui-nav-item">
         <a href="javascript:;">其它系统</a>
         <dl class="layui-nav-child">
@@ -40,7 +40,7 @@
           <dd><a href="">安全设置</a></dd>
         </dl>
       </li>
-      <li class="layui-nav-item"><a href="">退了</a></li>
+      <li class="layui-nav-item"><a href="">logout</a></li>
     </ul>
   </div>
   
@@ -59,49 +59,52 @@
         <li class="layui-nav-item">
           <a href="javascript:;">订单管理</a>
           <dl class="layui-nav-child">
-            <dd><a href="javascript:;">订单查询</a></dd>
-            <dd><a href="javascript:;">列表二</a></dd>
-            <dd><a href="">超链接</a></dd>
+            <dd><a href="/order/index">订单查询</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item">
           <a href="javascript:;">库存管理</a>
           <dl class="layui-nav-child">
-            <dd><a href="javascript:;">库存查询</a></dd>
-            <dd><a href="javascript:;">列表二</a></dd>
-            <dd><a href="">超链接</a></dd>
+            <dd><a href="/stock/index">库存查询</a></dd>
           </dl>
         </li>
-        <li class="layui-nav-item"><a href="">云市场</a></li>
-        <li class="layui-nav-item"><a href="">发布商品</a></li>
       </ul>
     </div>
   </div>
   
   <div class="layui-body">
     <!-- 内容主体区域 -->
-	 
+	<div class ="layui-form-item">
+
+	</div>	
+	<div>
+        <form class="layui-form" action="/goods/brand_filter" lay-filter="example">
+        <div class="layui-form-item">
+        <label class="layui-form-label">品牌ID</label>
+        <div class="layui-input-inline">
+        <input  id = "orderid" name="id" class="layui-input" type="text" placeholder="请输入品牌id" autocomplete="off" lay-verify="title">
+        </div>
+        <div class="layui-input-inline">
+        <button id = "search" class="layui-btn"  lay-filter="demo1" lay-submit="">查询</button>
+        </div>
+        </div>
+        </form>	
 	<div class="layui-btn-group demoTable">
   		<button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
 	  	<button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
   		<button class="layui-btn" data-type="isAll">验证是否全选</button>
 	</div>
    <div style="padding: 15px;">
-    <table class="layui-table" lay-filter="demo" lay-data="{width: 892, height:330, url:'/goods/table', page:true, id:'idTest'}">
+    <table class="layui-table" lay-filter="demo" lay-data="{width: 892, height:330, url:'/goods/brandTable', page:true, id:'idTest'}">
     <thead>
     <tr>
       <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-      <th lay-data="{field:'id', width:80, sort: true, fixed: true}">ID</th>
-      <th lay-data="{field:'username', width:80}">用户名</th>
-      <th lay-data="{field:'sex', width:80, sort: true}">性别</th>
-      <th lay-data="{field:'city', width:80}">城市</th>
-      <th lay-data="{field:'sign', width:160}">签名</th>
-      <th lay-data="{field:'experience', width:80, sort: true}">积分</th>
-      
-      <th lay-data="{field:'classify', width:80}">职业</th>
-      <th lay-data="{field:'wealth', width:135, sort: true}">财富</th>
-      <th lay-data="{field:'score', width:80, sort: true, fixed: 'right'}">评分</th>
-      <th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}"></th>
+      <th lay-data="{field:'id', width:160, sort: true, fixed: true}">品牌ID</th>
+      <th lay-data="{field:'name', width:80}">品牌名</th>
+      <th lay-data="{field:'des', width:200}">描述</th>
+      <th lay-data="{field:'is_del', width:160}">是否下架</th>
+      <th lay-data="{field:'add_time', width:200, sort: true}">添加时间</th>
+      <th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}">操作</th>
     </tr>
   </thead> 
 </table>
@@ -125,12 +128,25 @@ layui.use('table', function(){
     if(obj.event === 'detail'){
       layer.msg('ID：'+ data.id + ' 的查看操作');
     } else if(obj.event === 'del'){
-      layer.confirm('真的删除行么', function(index){
-        obj.del();
-        layer.close(index);
-      });
+      layer.confirm('确认要下架该品牌？', function(index){
+                         $.ajax({
+                        url: "/goods/brandDel",
+                        type: "POST",
+                        data: {id: data.id},
+                        success: function (msg) {
+                            if (msg == 200) {
+                                //删除这一行
+                                //关闭弹框
+                                layer.close(index);
+                                layer.msg("下架成功！请刷新", {icon: 6});
+                            } else {
+                                layer.msg("下架失败", {icon: 5});
+                            }
+                        }
+                    });
+	});
     } else if(obj.event === 'edit'){
-      layer.alert('编辑行：<br>'+ JSON.stringify(data))
+      layer.alert('查看行：<br>'+ JSON.stringify(data))
     }
   });
   
@@ -159,9 +175,8 @@ layui.use('table', function(){
 </script>
 
 <script id="barDemo" type="text/html">
-  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  <a class="layui-btn layui-btn-xs" lay-event="edit">查看</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">下架</a>
 </script>
 <script>
 //JavaScript代码区域

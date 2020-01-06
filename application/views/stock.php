@@ -1,3 +1,4 @@
+
  
 <!DOCTYPE html>
 <html>
@@ -15,7 +16,8 @@
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
       <li class="layui-nav-item"><a href="">控制台</a></li>
-      <li class="layui-nav-item"><a href="">商品管理</a></li>
+      <li class="layui-nav-item"><a href="/goods/index">商品管理</a></li>
+      <li class="layui-nav-item"><a href="/order/index">订单管理</a></li>
       <li class="layui-nav-item">
         <a href="javascript:;">其它系统</a>
         <dl class="layui-nav-child">
@@ -56,13 +58,13 @@
         <li class="layui-nav-item">
           <a href="javascript:;">订单管理</a>
           <dl class="layui-nav-child">
-            <dd><a href="javascript:;">订单查询</a></dd>
+            <dd><a href="/order/index">订单查询</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item">
           <a href="javascript:;">库存管理</a>
           <dl class="layui-nav-child">
-            <dd><a href="javascript:;">库存查询</a></dd>
+            <dd><a href="/stock/index">库存查询</a></dd>
           </dl>
         </li>
       </ul>
@@ -75,35 +77,32 @@
 
 	</div>	
 	<div>
-	<form class="layui-form" action="/order/filter" lay-filter="example"> 
-  	<div class="layui-form-item">
-    	<label class="layui-form-label">商品ID</label>
-    	<div class="layui-input-inline">
-      	<input  id = "orderid" name="name" class="layui-input" type="text" placeholder="请输入商品id" autocomplete="off" lay-verify="title">
-    	</div>
-    	<div class="layui-input-inline">
-      	<button id = "search" class="layui-btn"  lay-filter="demo1" lay-submit="">查询</button>
-    	</div>
-  	</div>
-	</form>
+        <form class="layui-form" action="/stock/filter" lay-filter="example">
+        <div class="layui-form-item">
+        <label class="layui-form-label">商品ID</label>
+        <div class="layui-input-inline">
+        <input  id = "orderid" name="id" class="layui-input" type="text" placeholder="请输入商品id" autocomplete="off" lay-verify="title">
+        </div>
+        <div class="layui-input-inline">
+        <button id = "search" class="layui-btn"  lay-filter="demo1" lay-submit="">查询</button>
+        </div>
+        </div>
+        </form>	
 	<div class="layui-btn-group demoTable">
   		<button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
 	  	<button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
   		<button class="layui-btn" data-type="isAll">验证是否全选</button>
 	</div>
    <div style="padding: 15px;">
-    <table  id="table1"  class="layui-table" lay-filter="demo" lay-data="{width: 892, height:330, url:'/goods/table', page:true, id:'idTest'}">
+    <table class="layui-table" lay-filter="demo" lay-data="{width: 892, height:330, url:'/stock/table', page:true, id:'idTest'}">
     <thead>
     <tr>
       <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-      <th lay-data="{field:'id', width:160, sort: true, fixed: true}">商品ID</th>
-      <th lay-data="{field:'name', width:160}">名称</th>
-      <th lay-data="{field:'brand', width:160, sort: true}">品牌</th>
-      <th lay-data="{field:'size', width:160, sort: true}">尺码</th>
-      <th lay-data="{field:'gender', width:80}">款式</th>
-      <th lay-data="{field:'offset', width:160}">是否下架</th>
-      <th lay-data="{field:'add_time', width:200}">添加时间</th>
-      <th lay-data="{field:'price', width:80, sort: true, fixed: 'right'}">价格</th>
+      <th lay-data="{field:'id', width:160, sort: true, fixed: true}">库存ID</th>
+      <th lay-data="{field:'goods_id', width:80}">商品ID</th>
+      <th lay-data="{field:'size', width:200}">尺码</th>
+      <th lay-data="{field:'num', width:160}">库存余量</th>
+      <th lay-data="{field:'add_time', width:200, sort: true}">入库时间</th>
       <th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}">操作</th>
     </tr>
   </thead> 
@@ -128,9 +127,9 @@ layui.use('table', function(){
     if(obj.event === 'detail'){
       layer.msg('ID：'+ data.id + ' 的查看操作');
     } else if(obj.event === 'del'){
-      layer.confirm('确认下架？', function(index){
-      	           $.ajax({
-                        url: "/goods/del",
+      layer.confirm('确认要下架该品牌？', function(index){
+                         $.ajax({
+                        url: "/goods/brandDel",
                         type: "POST",
                         data: {id: data.id},
                         success: function (msg) {
@@ -146,7 +145,7 @@ layui.use('table', function(){
                     });
 	});
     } else if(obj.event === 'edit'){
-      layer.alert('编辑行：<br>'+ JSON.stringify(data))
+      layer.alert('查看行：<br>'+ JSON.stringify(data))
     }
   });
   
@@ -173,13 +172,16 @@ layui.use('table', function(){
   });
 });
 </script>
+
 <script id="barDemo" type="text/html">
-  <a  class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">下架</a>
+  <a class="layui-btn layui-btn-xs" lay-event="edit">查看</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">下架</a>
 </script>
 <script>
 //JavaScript代码区域
 layui.use('element', function(){
   var element = layui.element;
+  
 });
 </script>
 </body>
