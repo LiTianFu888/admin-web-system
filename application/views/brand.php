@@ -17,7 +17,7 @@
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
       <li class="layui-nav-item"><a href="">控制台</a></li>
-      <li class="layui-nav-item"><a href="/goods/index">商品管理</a></li>
+      <li class="layui-nav-item"><a href="/goods/manage">商品管理</a></li>
       <li class="layui-nav-item"><a href="/order/index">订单管理</a></li>
       <li class="layui-nav-item">
         <a href="javascript:;">其它系统</a>
