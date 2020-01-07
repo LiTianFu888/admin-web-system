@@ -41,7 +41,7 @@
           <dd><a href="">安全设置</a></dd>
         </dl>
       </li>
-      <li class="layui-nav-item"><a href="">logout</a></li>
+      <li class="layui-nav-item"><a href="/login/logout">logout</a></li>
     </ul>
   </div>
   
