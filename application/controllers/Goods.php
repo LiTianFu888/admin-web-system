@@ -33,12 +33,19 @@ class Goods extends CI_Controller{
 		echo json_encode($res);
 	}
 	public function brandTable(){
+		$id = $this->input->get('id');
+		if(!empty($id)){
+			$this->db->where('id',$id);
+		}
 		$this->db->select('count(1) as ct');
 		$this->db->from('admin_brand');
 		$count = $this->db->get()->result_array();
 		$res = ['code'=>0,'msg'=>'','count'=>$count[0]['ct']];
 		$this->db->select('*,from_unixtime(`add_time`) as time');
 		$this->db->from('admin_brand');
+		if(!empty($id)){
+			$this->db->where('id',$id);
+		}
 		$data = $this->db->get()->result_array();
 		foreach($data as $k =>&$v){
 			unset($v['add_time']);
