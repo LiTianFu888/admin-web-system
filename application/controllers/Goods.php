@@ -3,14 +3,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Goods extends CI_Controller{
 	public function brand(){
+        	$user = $this->session->userdata('user');
+		if(!isset($user)){
+        		header('Location:/login/index');
+		}
 		$this->load->view('brand');
 	}
 
 	public function manage(){
+		
+        	$user = $this->session->userdata('user');
+		if(!isset($user)){
+        		header('Location:/login/index');
+		}
+		
 		$this->load->view('manage');
 	}
 
 	public function size(){
+        	$user = $this->session->userdata('user');
+		if(!isset($user)){
+        		header('Location:/login/index');
+		}
 		$this->load->view('size');
 	}
 	public function table(){

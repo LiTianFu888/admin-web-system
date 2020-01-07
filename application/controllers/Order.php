@@ -4,6 +4,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Order extends CI_Controller{
 
 	public function index(){
+        	$user = $this->session->userdata('user');
+		if(!isset($user)){
+        		header('Location:/login/index');
+		}
 		$this->load->view('order');
 	}
 	public function table(){

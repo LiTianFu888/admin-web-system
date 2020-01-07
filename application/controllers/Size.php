@@ -3,6 +3,10 @@
 class Size extends CI_Controller{
 
 	public function index(){
+        	$user = $this->session->userdata('user');
+		if(!isset($user)){
+        		header('Location:/login/index');
+		}
 		$this->load->view('size');
 	}
 	public function table(){
