@@ -196,7 +196,7 @@ layui.use('table', function(){
         ,where: {
             id: demoReload.val()
         }
-	,url: '/goods/brandTable'
+	,url: '/size/table'
        	,method: 'get'
       }, 'data');
     }
