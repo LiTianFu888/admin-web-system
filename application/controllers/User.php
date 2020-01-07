@@ -35,6 +35,8 @@ class User extends CI_Controller{
 
 	public function table(){
                 $id = $this->input->get('id');
+		$page = $this->input->get('page');
+		$limit = $this->input->get('limit');
                 if(!empty($id)){
                         $this->db->where('id',$id);
 			$this->db->or_where('name', $id); 
@@ -50,6 +52,8 @@ class User extends CI_Controller{
 			$this->db->or_where('name', $id); 
                 }
                 $data = $this->db->get()->result_array();
+		$start = ($page-1)*$limit;
+		$data = array_slice($data,$start,$limit);
                 foreach($data as $k =>&$v){
                         unset($v['add_time']);
                         $v['add_time'] = $v['time'];

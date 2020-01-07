@@ -12,6 +12,8 @@ class Order extends CI_Controller{
 	}
 	public function table(){
 		$id = $this->input->get('id');
+		$page = $this->input->get('page');
+		$limit = $this->input->get('limit');
 		if(!empty($id)){
 			$this->db->where('id',$id);
 		}
@@ -25,6 +27,8 @@ class Order extends CI_Controller{
 			$this->db->where('id',$id);
 		}
 		$data = $this->db->get()->result_array();
+		$start = ($page-1)*$limit;
+		$data = array_slice($data,$start,$limit);
 		foreach($data as $k =>&$v){
 			unset($v['add_time']);
 			$v['add_time'] = $v['time'];
