@@ -15,7 +15,8 @@
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
       <li class="layui-nav-item"><a href="">控制台</a></li>
-      <li class="layui-nav-item"><a href="">商品管理</a></li>
+      <li class="layui-nav-item"><a href="/goods/index">商品管理</a></li>
+      <li class="layui-nav-item"><a href="/order/index">订单管理</a></li>
       <li class="layui-nav-item">
         <a href="javascript:;">其它系统</a>
         <dl class="layui-nav-child">
@@ -56,13 +57,13 @@
         <li class="layui-nav-item">
           <a href="javascript:;">订单管理</a>
           <dl class="layui-nav-child">
-            <dd><a href="javascript:;">订单查询</a></dd>
+            <dd><a href="/order/index">订单查询</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item">
           <a href="javascript:;">库存管理</a>
           <dl class="layui-nav-child">
-            <dd><a href="javascript:;">库存查询</a></dd>
+            <dd><a href="/stock/index">库存查询</a></dd>
           </dl>
         </li>
       </ul>
@@ -71,28 +72,30 @@
   
   <div class="layui-body">
     <!-- 内容主体区域 -->
-	<div class ="layui-form-item">
+        <div class ="layui-form-item">
 
-	</div>	
-	<div>
-	<form class="layui-form" action="/order/filter" lay-filter="example"> 
-  	<div class="layui-form-item">
-    	<label class="layui-form-label">商品ID</label>
-    	<div class="layui-input-inline">
-      	<input  id = "orderid" name="name" class="layui-input" type="text" placeholder="请输入商品id" autocomplete="off" lay-verify="title">
-    	</div>
-    	<div class="layui-input-inline">
-      	<button id = "search" class="layui-btn"  lay-filter="demo1" lay-submit="">查询</button>
-    	</div>
-  	</div>
-	</form>
-	<div class="layui-btn-group demoTable">
-  		<button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
-	  	<button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
-  		<button class="layui-btn" data-type="isAll">验证是否全选</button>
-	</div>
+        </div>  
+        <div class="demoTable">
+                <div class="demoTable">
+                  商品ID：
+                  <div class="layui-inline">
+                  <input name="id" class="layui-input" id="demoReload" autocomplete="off" placeholder="请输入商品ID">
+                  </div>
+                <button class="layui-btn" data-type="reload">搜索</button>
+        </div>
+        </div>
+        <div class ="layui-form-item">
+
+        </div>  
+        <div class="layui-btn-group demoTable">
+                <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
+                <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
+                <button class="layui-btn" data-type="isAll">验证是否全选</button>
+        </div>
    <div style="padding: 15px;">
-    <table  id="table1"  class="layui-table" lay-filter="demo" lay-data="{width: 892, height:330, url:'/goods/table', page:true, id:'idTest'}">
+ 
+<table class="layui-hide" id="LAY_table_user" lay-filter="demo"></table>
+<!--    <table  id="table1"  class="layui-table" lay-filter="demo" lay-data="{width: 892, height:330, url:'/goods/table', page:true, id:'idTest'}">
     <thead>
     <tr>
       <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
@@ -107,18 +110,19 @@
       <th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}">操作</th>
     </tr>
   </thead> 
-</table>
+</table> -->
     </div>
   <div class="layui-footer">
     <!-- 底部固定区域 -->
-    © layui.com - 底部固定区域
+    © litianfu-admin.com -2020
   </div>
 </div>
 <script src="<?php echo base_url().'static/common/layui/layui.js'?>"></script>
 <script>
+
 layui.use('table', function(){
   var table = layui.table;
-  //监听表格复选框选择
+   //监听表格复选框选择
   table.on('checkbox(demo)', function(obj){
     console.log(obj)
   });
@@ -128,8 +132,8 @@ layui.use('table', function(){
     if(obj.event === 'detail'){
       layer.msg('ID：'+ data.id + ' 的查看操作');
     } else if(obj.event === 'del'){
-      layer.confirm('确认下架？', function(index){
-      	           $.ajax({
+      layer.confirm('确认关闭？', function(index){
+                   $.ajax({
                         url: "/goods/del",
                         type: "POST",
                         data: {id: data.id},
@@ -138,32 +142,68 @@ layui.use('table', function(){
                                 //删除这一行
                                 //关闭弹框
                                 layer.close(index);
-                                layer.msg("下架成功！请刷新", {icon: 6});
+                                layer.msg("关闭成功！请刷新", {icon: 6});
+                                location.reload();
                             } else {
-                                layer.msg("下架失败", {icon: 5});
+                                layer.msg("关闭失败", {icon: 5});
                             }
                         }
                     });
-	});
+        });
     } else if(obj.event === 'edit'){
       layer.alert('编辑行：<br>'+ JSON.stringify(data))
     }
   });
-  
-  var $ = layui.$, active = {
-    getCheckData: function(){ //获取选中数据
-      var checkStatus = table.checkStatus('idTest')
+   
+  //方法级渲染
+  table.render({
+    elem: '#LAY_table_user'
+    ,url: '/goods/table'
+    ,cols: [[
+      {type:'checkbox', fixed: 'left'}
+      ,{field:'id', title: '商品号', width:160, sort: true, fixed: true}
+      ,{field:'name', title: '名称', width:160}
+      ,{field:'brand_id', title: '品牌', width:200}
+      ,{field:'size_id', title: '尺码', width:80, sort:true }
+      ,{field:'gender', title: '款式',  width:80}
+      ,{field:'offset', title: '是否下架', width:160}
+      ,{field:'add_time', title: '添加时间', sort: true, width:200}
+      ,{fixed: 'right', title:"操作",width:178, align:'center', toolbar: '#barDemo'}
+    ]]
+    ,id: 'testReload'
+    ,page: true
+    ,height: 400
+    ,width:1000
+  });
+ var $ = layui.$, active = {
+     getCheckData: function(){ //获取选中数据
+      var checkStatus = table.checkStatus('testReload')
       ,data = checkStatus.data;
       layer.alert(JSON.stringify(data));
     }
     ,getCheckLength: function(){ //获取选中数目
-      var checkStatus = table.checkStatus('idTest')
+      var checkStatus = table.checkStatus('testReload')
       ,data = checkStatus.data;
       layer.msg('选中了：'+ data.length + ' 个');
     }
     ,isAll: function(){ //验证是否全选
-      var checkStatus = table.checkStatus('idTest');
+      var checkStatus = table.checkStatus('testReload');
       layer.msg(checkStatus.isAll ? '全选': '未全选')
+    }
+	, reload: function(){
+      var demoReload = $('#demoReload');
+      
+      //执行重载
+      table.reload('testReload', {
+        page: {
+          curr: 1 //重新从第 1 页开始
+        }
+        ,where: {
+            id: demoReload.val()
+        }
+	,url: '/goods/table'
+       	,method: 'get'
+      }, 'data');
     }
   };
   
@@ -174,7 +214,8 @@ layui.use('table', function(){
 });
 </script>
 <script id="barDemo" type="text/html">
-  <a  class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">下架</a>
+  <a class="layui-btn layui-btn-xs" lay-event="edit">查看</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">下架</a>
 </script>
 <script>
 //JavaScript代码区域

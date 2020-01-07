@@ -14,21 +14,25 @@ class Goods extends CI_Controller{
 		$this->load->view('size');
 	}
 	public function table(){
-		
-		$res = ['code'=>0,'msg'=>'','count'=>11];
-		$data = [
-				['id'=>1,'username'=>'test','sex'=>'2'],
-				['id'=>1,'username'=>'test','sex'=>'2'],
-				['id'=>1,'username'=>'test','sex'=>'2'],
-				['id'=>1,'username'=>'test','sex'=>'2'],
-				['id'=>1,'username'=>'test','sex'=>'2'],
-				['id'=>1,'username'=>'test','sex'=>'2'],
-				['id'=>1,'username'=>'test','sex'=>'2'],
-				['id'=>1,'username'=>'test','sex'=>'2'],
-				['id'=>1,'username'=>'test','sex'=>'2'],
-				['id'=>1,'username'=>'test','sex'=>'2'],
-				['id'=>1,'username'=>'test','sex'=>'2'],
-			];
+                $id = $this->input->get('id');
+                if(!empty($id)){
+                        $this->db->where('id',$id);
+                }
+                $this->db->select('count(1) as ct');
+                $this->db->from('admin_product');
+                $count = $this->db->get()->result_array();
+                $res = ['code'=>0,'msg'=>'','count'=>$count[0]['ct']];
+                $this->db->select('*,from_unixtime(`add_time`) as time');
+                $this->db->from('admin_product');
+                if(!empty($id)){
+                        $this->db->where('id',$id);
+                }
+                $data = $this->db->get()->result_array();
+                foreach($data as $k =>&$v){
+                        unset($v['add_time']);
+                        $v['add_time'] = $v['time'];
+
+                }	
 		$res['data'] = $data;
 		echo json_encode($res);
 	}
@@ -63,5 +67,13 @@ class Goods extends CI_Controller{
 		echo 200;
 		}
 	
+	}
+	public function Del(){
+		$id = $this->input->post('id');
+		$data = ['offset'=>'yes','update_time'=>time()];
+		$res=$this->db->update('admin_product',$data,array('id'=>$id));
+		if($res){
+		echo 200;
+		}
 	}
 }

@@ -58,13 +58,13 @@
         <li class="layui-nav-item">
           <a href="javascript:;">订单管理</a>
           <dl class="layui-nav-child">
-            <dd><a href="javascript:;">订单查询</a></dd>
+            <dd><a href="/order/index">订单查询</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item">
           <a href="javascript:;">库存管理</a>
           <dl class="layui-nav-child">
-            <dd><a href="javascript:;">库存查询</a></dd>
+            <dd><a href="/stock/index">库存查询</a></dd>
           </dl>
         </li>
       </ul>
