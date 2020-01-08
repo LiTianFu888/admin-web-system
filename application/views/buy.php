@@ -1,3 +1,4 @@
+
  
 <!DOCTYPE html>
 <html>
@@ -54,7 +55,7 @@
             <dd><a href="/goods/size">尺码管理</a></dd>
           </dl>
         </li>
-        <li class="layui-nav-item">
+        <li class="layui-nav-item layui-nav-itemed">
           <a href="javascript:;">订单管理</a>
           <dl class="layui-nav-child">
             <dd><a href="/order/index">订单查询</a></dd>
@@ -62,13 +63,13 @@
             <dd><a href="/sell/index">出售单查询</a></dd>
           </dl>
         </li>
-        <li class="layui-nav-item ">
+        <li class="layui-nav-item">
           <a href="javascript:;">库存管理</a>
           <dl class="layui-nav-child">
             <dd><a href="/stock/index">库存查询</a></dd>
           </dl>
         </li>
-        <li class="layui-nav-item layui-nav-itemed">
+        <li class="layui-nav-item">
           <a href="javascript:;">用户管理</a>
           <dl class="layui-nav-child">
             <dd><a href="/user/index">用户查询</a></dd>
@@ -80,41 +81,41 @@
   
   <div class="layui-body">
     <!-- 内容主体区域 -->
-        <div class ="layui-form-item">
+	<div class ="layui-form-item">
 
-        </div>  
-        <div class="demoTable">
-                <div class="demoTable">
-                 uid或用户名：
-                  <div class="layui-inline">
-                  <input name="id" class="layui-input" id="demoReload" autocomplete="off" placeholder="请输入用户UID或用户名">
-                  </div>
-                <button class="layui-btn" data-type="reload">搜索</button>
-        </div>
-        </div>
-        <div class ="layui-form-item">
+	</div>	
+	<div class="demoTable">
+		<div class="demoTable">
+		  订单号：
+		  <div class="layui-inline">
+		  <input name="id" class="layui-input" id="demoReload" autocomplete="off" placeholder="请输入订单号">
+		  </div>
+	  	<button class="layui-btn" data-type="reload">搜索</button>
+	</div>
+  	</div>
+	<div class ="layui-form-item">
 
-        </div>  
-        <div class="layui-btn-group demoTable">
-                <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
-                <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
-                <button class="layui-btn" data-type="isAll">验证是否全选</button>
-        </div>
+	</div>	
+	<div class="layui-btn-group demoTable">
+  		<button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
+	  	<button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
+  		<button class="layui-btn" data-type="isAll">验证是否全选</button>
+	</div>
    <div style="padding: 15px;">
  
-<table class="layui-hide" id="LAY_table_user" lay-filter="demo"></table>
-<!--    <table  id="table1"  class="layui-table" lay-filter="demo" lay-data="{width: 892, height:330, url:'/goods/table', page:true, id:'idTest'}">
+<table class="layui-hide" id="LAY_table_user" lay-filter="demo"></table> 
+<!--    <table  id="testReload"  class="layui-table" lay-filter="demo" lay-data="{width: 892, height:330, url:'/order/table', page:true, id:'idTest'}">
     <thead>
     <tr>
       <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-      <th lay-data="{field:'id', width:160, sort: true, fixed: true}">商品ID</th>
-      <th lay-data="{field:'name', width:160}">名称</th>
-      <th lay-data="{field:'brand', width:160, sort: true}">品牌</th>
-      <th lay-data="{field:'size', width:160, sort: true}">尺码</th>
-      <th lay-data="{field:'gender', width:80}">款式</th>
-      <th lay-data="{field:'offset', width:160}">是否下架</th>
+      <th lay-data="{field:'id', width:160, sort: true, fixed: true}">订单号</th>
+      <th lay-data="{field:'buyer_id', width:160,sort:true}">买家ID</th>
+      <th lay-data="{field:'seller_id', width:160, sort: true}">卖家ID</th>
+      <th lay-data="{field:'goods_id', width:80}">商品ID</th>
+      <th lay-data="{field:'size_id', width:80}">尺码</th>
+      <th lay-data="{field:'status', width:160}">状态</th>
       <th lay-data="{field:'add_time', width:200}">添加时间</th>
-      <th lay-data="{field:'price', width:80, sort: true, fixed: 'right'}">价格</th>
+      <th lay-data="{field:'cost', width:80, sort: true, fixed: 'right'}">价格</th>
       <th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}">操作</th>
     </tr>
   </thead> 
@@ -122,7 +123,7 @@
     </div>
   <div class="layui-footer">
     <!-- 底部固定区域 -->
-    © litianfu-admin.com -2020
+    © layui.com - 底部固定区域
   </div>
 </div>
 <script src="<?php echo base_url().'static/common/layui/layui.js'?>"></script>
@@ -140,9 +141,9 @@ layui.use('table', function(){
     if(obj.event === 'detail'){
       layer.msg('ID：'+ data.id + ' 的查看操作');
     } else if(obj.event === 'del'){
-      layer.confirm('封禁该用户？', function(index){
+      layer.confirm('确认关闭？', function(index){
                    $.ajax({
-                        url: "/user/ban",
+                        url: "/buy/del",
                         type: "POST",
                         data: {id: data.id},
                         success: function (msg) {
@@ -150,52 +151,36 @@ layui.use('table', function(){
                                 //删除这一行
                                 //关闭弹框
                                 layer.close(index);
-                                layer.msg("封禁成功！请刷新", {icon: 6});
+                                layer.msg("关闭成功！请刷新", {icon: 6});
                                 location.reload();
                             } else {
-                                layer.msg("封禁失败", {icon: 5});
+                                layer.msg("关闭失败", {icon: 5});
                             }
                         }
                     });
         });
     } else if(obj.event === 'edit'){
-          layer.confirm('解封该用户？', function(index){
-                   $.ajax({
-                        url: "/user/free",
-                        type: "POST",
-                        data: {id: data.id},
-                        success: function (msg) {
-                            if (msg == 200) {
-                                //删除这一行
-                                //关闭弹框
-                                layer.close(index);
-                                layer.msg("解禁成功！请刷新", {icon: 6});
-                                location.reload();
-                            } else {
-                                layer.msg("解禁失败", {icon: 5});
-                            }
-                        }
-                    });
-        });
-	}
+      layer.alert('编辑行：<br>'+ JSON.stringify(data))
+    }
   });
    
   //方法级渲染
   table.render({
     elem: '#LAY_table_user'
-    ,url: '/user/table'
+    ,url: '/buy/table'
     ,cols: [[
       {type:'checkbox', fixed: 'left'}
-      ,{field:'id', title: 'uid', width:160, sort: true, fixed: true}
-      ,{field:'name', title: '用户名', width:160}
-      ,{field:'ban', title: '封禁状态', width:160, sort:true }
-      ,{field:'reson', title: '封禁原因',  width:160}
+      ,{field:'id', title: '购买单号', width:160, sort: true, fixed: true}
+      ,{field:'goods_id', title: '商品id', width:160,sort:true}
+      ,{field:'buyer_id', title: '买家uid', width:160, sort: true}
+      ,{field:'status', title: '状态',  width:200}
+      ,{field:'price', title: '价格',  width:200}
       ,{field:'add_time', title: '添加时间', sort: true, width:200}
       ,{fixed: 'right', title:"操作",width:178, align:'center', toolbar: '#barDemo'}
     ]]
     ,id: 'testReload'
     ,page: true
-    ,height: 400
+    ,height: 310
     ,width:1000
   });
  var $ = layui.$, active = {
@@ -224,7 +209,7 @@ layui.use('table', function(){
         ,where: {
             id: demoReload.val()
         }
-	,url: '/user/table'
+	,url: '/buy/table'
        	,method: 'get'
       }, 'data');
     }
@@ -237,8 +222,7 @@ layui.use('table', function(){
 });
 </script>
 <script id="barDemo" type="text/html">
-  <a class="layui-btn layui-btn-xs" lay-event="edit">解封</a>
-  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">封禁</a>
+  <a  class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">关闭</a>
 </script>
 <script>
 //JavaScript代码区域

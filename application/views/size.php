@@ -61,12 +61,20 @@
           <a href="javascript:;">订单管理</a>
           <dl class="layui-nav-child">
             <dd><a href="/order/index">订单查询</a></dd>
+            <dd><a href="/buy/index">购买单查询</a></dd>
+            <dd><a href="/sell/index">出售单查询</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item">
           <a href="javascript:;">库存管理</a>
           <dl class="layui-nav-child">
             <dd><a href="/stock/index">库存查询</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">用户管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="/user/index">用户查询</a></dd>
           </dl>
         </li>
       </ul>

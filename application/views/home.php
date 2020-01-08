@@ -61,6 +61,8 @@
           <a href="javascript:;">订单管理</a>
           <dl class="layui-nav-child">
             <dd><a href="/order/index">订单查询</a></dd>
+            <dd><a href="/buy/index">购买单查询</a></dd>
+            <dd><a href="/sell/index">出售单查询</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item">
@@ -81,7 +83,7 @@
   
   <div class="layui-body">
     <!-- 内容主体区域 -->
-    <div style="padding: 15px;">内容主体区域
+    <div style="padding: 15px;">
       <div class ="layui-form-item">
       </div>
       <div id="main1" style="width: 800px;height:400px;" ></div>
@@ -99,7 +101,7 @@
   
   <div class="layui-footer">
     <!-- 底部固定区域 -->
-    © layui.com - 底部固定区域
+    © litianfu-admin.com - 2020
   </div>
 </div>
 <script src="<?php echo base_url().'static/common/layui/layui.js'?>"></script>

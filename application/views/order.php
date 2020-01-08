@@ -56,16 +56,24 @@
             <dd><a href="/goods/size">尺码管理</a></dd>
           </dl>
         </li>
-        <li class="layui-nav-item">
+        <li class="layui-nav-item layui-nav-itemed">
           <a href="javascript:;">订单管理</a>
           <dl class="layui-nav-child">
             <dd><a href="/order/index">订单查询</a></dd>
+            <dd><a href="/buy/index">购买单查询</a></dd>
+            <dd><a href="/sell/index">出售单查询</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item">
           <a href="javascript:;">库存管理</a>
           <dl class="layui-nav-child">
             <dd><a href="/stock/index">库存查询</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">用户管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="/user/index">用户查询</a></dd>
           </dl>
         </li>
       </ul>
@@ -79,7 +87,7 @@
 	</div>	
 	<div class="demoTable">
 		<div class="demoTable">
-		  订单号：
+		  购买单号：
 		  <div class="layui-inline">
 		  <input name="id" class="layui-input" id="demoReload" autocomplete="off" placeholder="请输入订单号">
 		  </div>
@@ -116,7 +124,7 @@
     </div>
   <div class="layui-footer">
     <!-- 底部固定区域 -->
-    © layui.com - 底部固定区域
+    © litianfu-admin.com - 2020
   </div>
 </div>
 <script src="<?php echo base_url().'static/common/layui/layui.js'?>"></script>
