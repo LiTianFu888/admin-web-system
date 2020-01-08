@@ -22,16 +22,11 @@ class Home extends CI_Controller{
             $data[4],
         ];
         $data2=[];
-       /* for($i=0;$i<5;$i++) {
+        for($i=0;$i<5;$i++) {
             $sql="select * from admin_product where id=".$data1[$i]['goods_id'];
             $query=$this->db->query($sql);
             $data2[] = $query->result_array();
-        }*/
-	foreach($data1 as $key=>$val){
-            $sql="select * from admin_product where id=".$val['goods_id'];
-	    $query=$this->db->query($sql);
-            $data2[] = $query->result_array();
-	}
+        }
         $data3=[
             ['value'=>intval($data1[0]['sum(cost)']),'name'=>$data2[0][0]['name']],
             ['value'=>intval($data1[1]['sum(cost)']),'name'=>$data2[1][0]['name']],
@@ -86,6 +81,7 @@ class Home extends CI_Controller{
             $query=$this->db->query($sql);
             $data2[] = $query->result_array();
         }
+		
         $data3=[
             ['value'=>intval($data1[0]['sum(cost)']),'name'=>$data2[0][0]['name']],
             ['value'=>intval($data1[1]['sum(cost)']),'name'=>$data2[1][0]['name']],

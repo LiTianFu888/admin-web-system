@@ -103,6 +103,7 @@
   </div>
 </div>
 <script src="<?php echo base_url().'static/common/layui/layui.js'?>"></script>
+<script src="<?php echo base_url().'static/common/echarts.js'?>"></script>
 <script>
 //JavaScript代码区域
 layui.use('element', function(){
